@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-""" 尚捷科技 """
+# Copyright (c) @Lzjever.
+# See LICENSE for details.
+
+
 
 from pullot import FrameBuffer
-#from shangjie.foundation.substrate.utils.logger import logger
-
 import socket
 import select
 import traceback
@@ -27,7 +28,8 @@ class SelectClient(object):
             self.connected = True
         except socket.error as e:
             #logger.ods ('Could not connect to tcp server @%d' % self.port ,lv='dev',cat = 'foundation.tcp')
-            raise RuntimeError('Could not connect to tcp server @%s' % str( (self.host, self.port) )) 
+            raise RuntimeError('Could not connect to tcp server @%s' \
+                                % str( (self.host, self.port) )) 
 
         
     def pop_inbound (self):
@@ -47,7 +49,8 @@ class SelectClient(object):
     def do_select_comm(self):
 
         try:
-            inputready, outputready,exceptrdy = select.select([self.sock], [ ],[ ],0.01)
+            inputready, outputready,exceptrdy = select.select([self.sock], \
+                                                             [ ],[ ],0.01)
             self.sock.send(self.outbound.get_buffer())
             self.outbound.clear_buffer()
             # only one socket descripter has been selected.
@@ -56,7 +59,7 @@ class SelectClient(object):
                     buf = self.sock.recv(1024)
                     data = buf
                     if not buf:
-                        logger.ods ('Socket is shutting down.' ,lv='dev',cat = 'foundation.tcp')
+                        #logger.ods ('Socket is shutting down.' ,lv='dev',cat = 'foundation.tcp')
                         self.sock.close()
                         self.connected = False
                         break

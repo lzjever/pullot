@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-"""   """
+# Copyright (c) @Lzjever.
+# See LICENSE for details.
+
+
 
 from pullot import FrameBuffer
-#from shangjie.foundation.substrate.utils.logger import logger
-
 import socket
 import select
 import traceback
@@ -21,10 +22,7 @@ class SelectServer(object):
         self.host = host
         self.server_address = (host,port)
         self.frame_decoder = frame_decoder
- 
         self.s_lock = threading.RLock()
-
-
         self.to_close_socks = []
 
         try:
@@ -41,7 +39,7 @@ class SelectServer(object):
         except socket.error as e:
             traceback.print_exc()
             
-            logger.ods ('Could not listen on port @%d' % self.port ,lv='dev',cat = 'foundation.tcp')
+            #logger.ods ('Could not listen on port @%d' % self.port ,lv='dev',cat = 'foundation.tcp')
             raise RuntimeError('Could not listen on port @%d' % self.port) 
 
     def _get_inputs (self):
@@ -112,7 +110,8 @@ class SelectServer(object):
             peer_sock.shutdown(socket.SHUT_RDWR)
             peer_sock.close()
         except Exception as e:
-            logger.ods ('Exception @ [_clear_peer]. Ignored.'  ,lv='dev',cat = 'foundation.tcp'  )
+            pass
+            #logger.ods ('Exception @ [_clear_peer]. Ignored.'  ,lv='dev',cat = 'foundation.tcp'  )
                 
     def close_peer (self,peer_sock):
         try:
@@ -151,10 +150,10 @@ class SelectServer(object):
                             data += buf
                         self.inbound[ sock ].append_buffer(data)
                 except BlockingIOError as err:
-                    logger.ods ('BlockingIOError @ [_proc_input]'  ,lv='dev',cat = 'foundation.tcp'  )
+                    #logger.ods ('BlockingIOError @ [_proc_input]'  ,lv='dev',cat = 'foundation.tcp'  )
                     return
                 except Exception as err:
-                    logger.ods (traceback.format_exc()  ,lv='error',cat = 'foundation.tcp'  )
+                    #logger.ods (traceback.format_exc()  ,lv='error',cat = 'foundation.tcp'  )
                     self._clear_peer(sock)
 
                 
@@ -175,17 +174,18 @@ class SelectServer(object):
                         self._clear_peer(sock)
                             
                 else:
-                    logger.ods ("sending " + str(to_send) + " to " + str(sock.getpeername() )  ,lv='dev',cat = 'foundation.tcp'  )
+                    #logger.ods ("sending " + str(to_send) + " to " + str(sock.getpeername() )  ,lv='dev',cat = 'foundation.tcp'  )
                     sock.send(to_send)
             except BlockingIOError as err:
-                logger.ods ('BlockingIOError @ [_proc_output]'  ,lv='dev',cat = 'foundation.tcp'  )
+                pass
+                #logger.ods ('BlockingIOError @ [_proc_output]'  ,lv='dev',cat = 'foundation.tcp'  )
             except Exception as err:
-                logger.ods (traceback.format_exc()  ,lv='error',cat = 'foundation.tcp'  )
+                #logger.ods (traceback.format_exc()  ,lv='error',cat = 'foundation.tcp'  )
                 self._clear_peer(sock)
 
     def _proc_exception(self,xlist):
         for sock in xlist:        
-            logger.ods ("exception condition on " + str( sock.getpeername() ) ,lv='dev',cat = 'foundation.tcp'  )
+            #logger.ods ("exception condition on " + str( sock.getpeername() ) ,lv='dev',cat = 'foundation.tcp'  )
             self._clear_peer(sock)
                             
     def do_select_comm(self):
@@ -201,7 +201,7 @@ class SelectServer(object):
 
                                         
             except Exception as err:
-                logger.ods (traceback.format_exc()  ,lv='error',cat = 'foundation.tcp'  )
+                #logger.ods (traceback.format_exc()  ,lv='error',cat = 'foundation.tcp'  )
                 raise RuntimeError('[do_select_comm] failed.') 
         finally:
             self.s_lock.release()
@@ -229,7 +229,7 @@ if __name__ == '__main__':
     server = SelectServer(frame_decoder = _test_decoder)
     while True:
         server.do_select_comm()
-        logger.ods ("123",lv='dev',cat = 'foundation.tcp'  )
+        #logger.ods ("123",lv='dev',cat = 'foundation.tcp'  )
         in_frame = server.pop_inbound()
         if in_frame is not None:
             print (in_frame)

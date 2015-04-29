@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-"""  """
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+# Copyright (c) @Lzjever.
+# See LICENSE for details.
 
-"""
-Descriptions
-"""
+
 
 import struct
-#from shangjie.foundation.substrate.utils.logger import logger
-
 import threading
 import copy
 
