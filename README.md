@@ -1,4 +1,18 @@
 # pullot
-Pullot is a light-weight, fast and easy-to-use python framework that supports frame based tcp communication between server and clients.
+Pullot is a frame based TCP socket wrapper written in Python. It's purpuse is to
+provide a reliable, easy-to-use, and light-weight toolkit to adapt frame based
+wire-level protocols. 
+
+
+
+                 ____            ___    ___             __      
+                /\  _`\         /\_ \  /\_ \           /\ \__   
+                \ \ \L\ \ __  __\//\ \ \//\ \      ___ \ \ ,_\  
+                 \ \ ,__//\ \/\ \ \ \ \  \ \ \    / __`\\ \ \/  
+                  \ \ \/ \ \ \_\ \ \_\ \_ \_\ \_ /\ \L\ \\ \ \_ 
+                   \ \_\  \ \____/ /\____\/\____\\ \____/ \ \__\
+                    \/_/   \/___/  \/____/\/____/ \/___/   \/__/
+
+
 
 
