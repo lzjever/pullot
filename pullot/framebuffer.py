@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) @Lzjever.
+
+# The MIT License (MIT)
+# Copyright (c) 2015 Percy Li
 # See LICENSE for details.
 
 
@@ -64,72 +66,48 @@ class FrameBuffer(object):
 
 
 
-# thread safe version!        
+# thread safe version
 class TSFrameBuffer(FrameBuffer):
     def __init__(self,decoder = None):
-        super(TSFrameBuffer,self).__init__(decoder)
+        FrameBuffer.__init__(self,decoder)
         self.internal_lock = threading.RLock()
 
     def set_decoder (self,decoder = None):
-        try:
-            self.internal_lock.acquire()
-            return super(TSFrameBuffer,self).set_decoder(decoder)
-        finally:
-            self.internal_lock.release()
-
+        with self.internal_lock:
+            return FrameBuffer.set_decoder(self,decoder)
 
     def pop_frame (self):
-        try:
-            self.internal_lock.acquire()
-            return super(TSFrameBuffer,self).pop_frame()
-        finally:
-            self.internal_lock.release()
+        with self.internal_lock:
+            return FrameBuffer.pop_frame(self)
+
 
 
 
     def push_frame (self,frame):
-        try:
-            self.internal_lock.acquire()
-            return super(TSFrameBuffer,self).push_frame(frame)
-        finally:
-            self.internal_lock.release()
+        with self.internal_lock:
+            return FrameBuffer.push_frame(self,frame)
 
                         
 
     def append_buffer (self,buf):
-        try:
-            self.internal_lock.acquire()
-            return super(TSFrameBuffer,self).append_buffer(buf)
-        finally:
-            self.internal_lock.release()
+        with self.internal_lock:
+            return FrameBuffer.append_buffer(self,buf)
 
     def pop_buffer (self):
-        try:
-            self.internal_lock.acquire()
-            return super(TSFrameBuffer,self).pop_buffer()
-        finally:
-            self.internal_lock.release()
+        with self.internal_lock:
+            return FrameBuffer.pop_buffer(self)
 
     def get_buffer (self):
-        try:
-            self.internal_lock.acquire()
-            return copy.deepcopy( super(TSFrameBuffer,self).get_buffer() )
-        finally:
-            self.internal_lock.release()
+        with self.internal_lock:
+            return copy.deepcopy( FrameBuffer.get_buffer(self) )
 
     def clear_buffer (self):
-        try:
-            self.internal_lock.acquire()
-            return super(TSFrameBuffer,self).clear_buffer()
-        finally:
-            self.internal_lock.release()
+        with self.internal_lock:
+            return FrameBuffer.clear_buffer(self)
         
     def get_buffer_length(self):
-        try:
-            self.internal_lock.acquire()
-            return super(TSFrameBuffer,self).get_buffer_length()
-        finally:
-            self.internal_lock.release()
+        with self.internal_lock:
+            return FrameBuffer.get_buffer_length(self)
     
 
 
