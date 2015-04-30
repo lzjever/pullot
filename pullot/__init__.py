@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+
+# The MIT License (MIT)
+# Copyright (c) 2015 Percy Li
+# See LICENSE for details.
+
+
 __version__ = '0.0.01'
 
 import logging
@@ -12,6 +19,6 @@ except ImportError:
 # Add NullHandler to prevent logging warnings
 logging.getLogger(__name__).addHandler(NullHandler())
 
+from pullot.framebuffer import FrameBuffer , TSFrameBuffer
 from pullot.clients import SelectClient
 from pullot.servers import SelectServer
-from pullot.framebuffer import FrameBuffer

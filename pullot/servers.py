@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) @Lzjever.
+
+# The MIT License (MIT)
+# Copyright (c) 2015 Percy Li
 # See LICENSE for details.
 
 
-
-from pullot import FrameBuffer
+from pullot import FrameBuffer, TSFrameBuffer
 import socket
 import select
 import traceback
