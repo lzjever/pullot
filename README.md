@@ -1,7 +1,7 @@
 # pullot
 Pullot is a frame based TCP socket wrapper written in Python. It's purpuse is to
-provide a reliable, easy-to-use, and light-weight toolkit to adapt frame based
-wire-level protocols. 
+provide a reliable, easy-to-use, and light-weight toolkit to adapt various frame
+based network wire-level protocols. 
 
 
 
